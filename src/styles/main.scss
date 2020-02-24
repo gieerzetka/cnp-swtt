@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
+@import "~bootstrap";
+@import "scss/components/*";
+@import "scss/containers/*";
+
+body {
+	background-color: #000000;
+	font-family: 'Press Start 2P', sans-serif;
+}
+
+select {
+	outline: 0;
+}
+
+:disabled {
+	cursor: not-allowed;
+}
+
