@@ -1,5 +1,6 @@
-import {FetchStatuses} from "../data/FetchStatuses";
+import {FightStatuses} from "../data/FightStatuses";
 import {swttStore} from "../index";
+import {IPlayer} from "../interfaces/IPlayer";
 import PlayersUtils from "./PlayersUtils";
 import ResourcesUtils from "./ResourcesUtils";
 
@@ -10,18 +11,25 @@ export default class FightUtils {
 		for (let i = 0; i < players.length; i++) {
 			await ResourcesUtils.handleFetchingNewResource(players[i]);
 		}
-
-		if (swttStore.fight.fightStatus === FetchStatuses.SUCCESS)
-			FightUtils.settleFight();
 	}
 
 	public static settleFight() {
-		const higestScore:number = swttStore.players.highestScore;
+		const highestScore:number = swttStore.players.highestScore;
+		let winners:IPlayer[] = [];
 
 		swttStore.players.players.forEach(player => {
 			const playerScore = PlayersUtils.getPlayerScore(player);
-			if (playerScore === higestScore)
+			if (playerScore === highestScore) {
 				swttStore.fight.addWinner(player.name);
+				winners.push(player);
+			}
 		});
+
+		winners.forEach(winner => {
+			const status:FightStatuses = PlayersUtils.getPlayerFightStatus(winner);
+
+			if (status === FightStatuses.WINNER)
+				swttStore.players.addPoint(winner.name);
+		})
 	}
 }

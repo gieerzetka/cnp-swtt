@@ -2,6 +2,7 @@ import {action, observable} from "mobx";
 import {FetchStatuses} from "../data/FetchStatuses";
 import {Players} from "../data/Players";
 import {swttStore} from "../index";
+import FightUtils from "../utils/FightUtils";
 
 export default class FightStore {
 	@observable fightStatus:FetchStatuses = FetchStatuses.PRISTINE;
@@ -18,10 +19,17 @@ export default class FightStore {
 		this.fightStatus = FetchStatuses.ERROR;
 	}
 
+	@action markLoadingFightAsSuccess() {
+		this.fightStatus = FetchStatuses.SUCCESS;
+	}
+
 	@action finishDownloadingFightData() {
 		this.downloadedFightData++;
-		if (this.downloadedFightData === swttStore.players.playersCount)
-			this.fightStatus = FetchStatuses.SUCCESS;
+
+		if (swttStore.fight.downloadedFightData === swttStore.players.playersCount) {
+			FightUtils.settleFight();
+			swttStore.fight.markLoadingFightAsSuccess();
+		}
 	}
 
 	@action addWinner(playerName:Players) {

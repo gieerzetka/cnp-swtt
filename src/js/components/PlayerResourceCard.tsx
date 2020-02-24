@@ -5,6 +5,7 @@ import {IResource} from "../interfaces/IResource";
 import IResourceWinningStat from "../interfaces/IResourceWinningStat";
 import ResourcesUtils from "../utils/ResourcesUtils";
 import ResourceTypesUtil from "../utils/ResourceTypesUtils";
+import Badge from "./Badge";
 
 interface ICardContainer {
 	resourceType:ResourceTypes,
@@ -26,7 +27,7 @@ export default class PlayerResourceCard extends React.Component<ICardContainer, 
 				style = 'secondary'
 		}
 
-		classes += `bg-${style}`;
+		classes += ` bg-${style}`;
 
 		return classes;
 	}
@@ -35,14 +36,18 @@ export default class PlayerResourceCard extends React.Component<ICardContainer, 
 		const {resourceType, resourceId} = this.props;
 		const resource:IResource = ResourcesUtils.getResourceByIdAndType(resourceId, resourceType);
 		const resourceWinningStat:IResourceWinningStat = ResourceTypesUtil.getResourceTypeWinningStat(resourceType);
-		const statPower:number = ResourcesUtils.getStatPower(resourceId, resourceType, resourceWinningStat.name);
+		const statPower:string = ResourcesUtils.getStatPower(resourceId, resourceType, resourceWinningStat.name).toString();
 
 		return <section className={this.getCardClasses()}>
 			<header className="card-header">
 				{resource.data.name}
 			</header>
 			<section className="card-body">
-				{resourceWinningStat.displayName}: {statPower}
+				<span>{resourceWinningStat.displayName}:</span>
+				<Badge
+					text={statPower}
+					additionalClasses={'badge-pill badge-light pb-2 pt-2'}
+				/>
 			</section>
 		</section>;
 	}

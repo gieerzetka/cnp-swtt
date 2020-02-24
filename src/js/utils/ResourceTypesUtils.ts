@@ -26,7 +26,7 @@ export default class ResourcesTypesUtil {
 					entriesCount: 0,
 					winningStat: {
 						name: "crew",
-						displayName: "Mass"
+						displayName: "Crew"
 					}
 				};
 		}

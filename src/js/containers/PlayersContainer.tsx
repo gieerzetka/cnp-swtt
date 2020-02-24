@@ -2,6 +2,7 @@ import {observer} from "mobx-react";
 import * as React from "react";
 import ErrorMessage from "../components/ErrorMessage";
 import Spinner from "../components/Spinner";
+import WinnersList from "../components/WinnersList";
 import {FetchStatuses} from "../data/FetchStatuses";
 import {swttStore} from "../index";
 import PlayerContainer from "./PlayerContainer";
@@ -20,8 +21,14 @@ export default class PlayersContainer extends React.Component<{}, {}> {
 			case FetchStatuses.ERROR:
 				return <ErrorMessage />;
 			default:
-				return <div className="row mb-5">
-					{this.generatePlayers()}
+				return <div className="PlayersContainer">
+					<WinnersList
+						key="winnersList"
+						additionalClasses="mb-5"
+					/>
+					<div className="row mb-5">
+						{this.generatePlayers()}
+					</div>
 				</div>;
 		}
 	};
