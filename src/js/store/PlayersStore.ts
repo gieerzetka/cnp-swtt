@@ -2,7 +2,7 @@ import {action, computed, observable} from "mobx";
 import {Players} from "../data/Players";
 import {ResourceTypes} from "../data/ResourceTypes";
 import {IPlayer} from "../interfaces/IPlayer";
-import PlayersUtil from "../utils/PlayersUtil";
+import PlayersUtils from "../utils/PlayersUtils";
 
 export default class PlayersStore {
 	constructor() {
@@ -20,18 +20,31 @@ export default class PlayersStore {
 
 	@observable players:IPlayer[] = [];
 
-	@action addPoint(name:string) {
-		PlayersUtil.getPlayerByName(name).score++;
+	@computed get playersCount():number {
+		return this.players.length;
 	}
 
-	@action changeSelectedResource(playerName:Players, resourceId:number, resourceType:ResourceTypes) {
-		PlayersUtil.getPlayerByName(playerName).resource = {
+	@computed get highestScore():number {
+
+		let higestScore:number = 0;
+
+		this.players.forEach(player => {
+			const score = PlayersUtils.getPlayerScore(player);
+			if (score > higestScore)
+				higestScore = score;
+		});
+
+		return higestScore;
+	}
+
+	@action addPoint(playerName:string) {
+		PlayersUtils.getPlayerByName(playerName).score++;
+	}
+
+	@action changePlayerResource(playerName:Players, resourceId:number, resourceType:ResourceTypes) {
+		PlayersUtils.getPlayerByName(playerName).resource = {
 			id: resourceId,
 			type: resourceType
 		};
-	}
-
-	@computed get playersCount():number {
-		return this.players.length;
 	}
 }

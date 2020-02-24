@@ -10,7 +10,6 @@ module.exports = {
 	entry:  {
 		app: './src/js/index.tsx',
 		vendor: [
-			'@babel/polyfill',
 			'react',
 			'react-dom'
 		]
@@ -29,9 +28,6 @@ module.exports = {
 				test: /\.tsx?$/,
 				exclude: /node_modules/,
 				use: [
-					{
-						loader: "babel-loader"
-					},
 					{
 						loader: "awesome-typescript-loader"
 					},

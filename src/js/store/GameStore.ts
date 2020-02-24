@@ -1,39 +1,22 @@
 import {action, observable} from "mobx";
-import {GameStatuses} from "../data/GameStatuses";
+import {FetchStatuses} from "../data/FetchStatuses";
 import {swttStore} from "../index";
 
 export default class GameStore {
-	@observable loadingGame:GameStatuses = GameStatuses.PRISTINE;
+	@observable loadingGame:FetchStatuses = FetchStatuses.PRISTINE;
 	downloadedResourceTypesData:number = 0;
-	@observable fightStatus:GameStatuses = GameStatuses.PRISTINE;
-	downloadedFightData:number = 0;
 
 	@action startLoadingGame() {
-		this.loadingGame = GameStatuses.PENDING;
+		this.loadingGame = FetchStatuses.PENDING;
 	}
 
 	@action markLoadingGameAsError() {
-		this.loadingGame = GameStatuses.ERROR;
+		this.loadingGame = FetchStatuses.ERROR;
 	}
 
 	@action finishDownloadingResourceTypesData() {
 		this.downloadedResourceTypesData++;
-		if (this.downloadedResourceTypesData === swttStore.resources.resourceTypesCount)
-			this.loadingGame = GameStatuses.SUCCESS;
-	}
-
-	@action startFighting() {
-		this.fightStatus = GameStatuses.PENDING;
-		this.downloadedFightData = 0;
-	}
-
-	@action markLoadingFightAsError() {
-		this.fightStatus = GameStatuses.ERROR;
-	}
-
-	@action finishDownloadingFightData() {
-		this.downloadedFightData++;
-		if (this.downloadedFightData === swttStore.players.playersCount)
-			this.fightStatus = GameStatuses.SUCCESS;
+		if (this.downloadedResourceTypesData === swttStore.resourceTypes.resourceTypesCount)
+			this.loadingGame = FetchStatuses.SUCCESS;
 	}
 }

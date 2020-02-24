@@ -1,8 +1,8 @@
 import Axios from "axios";
 import {MainConfig} from "../configs/mainConfig";
 
-const AxiosUtil = Axios.create({
+const AxiosUtils = Axios.create({
 	baseURL: MainConfig.APIBaseUrl,
 });
 
-export default AxiosUtil;
+export default AxiosUtils;

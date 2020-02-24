@@ -2,22 +2,22 @@ import {observer} from "mobx-react";
 import * as React from "react";
 import ErrorMessage from "../components/ErrorMessage";
 import Spinner from "../components/Spinner";
-import {GameStatuses} from "../data/GameStatuses";
+import {FetchStatuses} from "../data/FetchStatuses";
 import {swttStore} from "../index";
 import PlayerContainer from "./PlayerContainer";
 
 @observer
 export default class PlayersContainer extends React.Component<{}, {}> {
 	private getContent = () => {
-		switch (swttStore.game.fightStatus) {
-			case GameStatuses.PRISTINE:
+		switch (swttStore.fight.fightStatus) {
+			case FetchStatuses.PRISTINE:
 				return null;
-			case GameStatuses.PENDING:
+			case FetchStatuses.PENDING:
 				return <Spinner
 						type='light'
 						containerClasses='d-flex justify-content-center mb-5'
 					/>;
-			case GameStatuses.ERROR:
+			case FetchStatuses.ERROR:
 				return <ErrorMessage />;
 			default:
 				return <div className="row mb-5">
