@@ -1,17 +1,40 @@
-# Boilerplate for Webpack + React + Typescript + Babel + Sass 
-Quick start for creating Typescript React app with Weback and Babel. It uses Sass: Syntactically Awesome Style Sheets for CSS and Yarn as dependency manager. 
+# Star Wars Top Trumps
 
 ## Instalation 
 
-1. Clone repo: `git clone https://github.com/gieerzetka/webpack-react-typescript-babel-sass.git <YOUR_PROJECT_NAME>`
-2. Install dependencies: `yarn install`
+1. Clone repo: `git clone https://github.com/gieerzetka/cnp-swtt.git <YOUR_PROJECT_NAME>`
+2. Install dependencies: `yarn install` or `npm install`
 
 ## Usage
-**Development mode**
+### Development mode
+
+With yarn:
 ```sh
 yarn start
 ```
-**Production mode**
+With npm:
+```sh
+npm start
+```
+
+### Production mode
+
+With yarn:
 ```sh
 yarn build
+```
+With npm:
+```sh
+npm build
+```
+
+### Test mode
+
+With yarn:
+```sh
+yarn jasmine
+```
+With npm:
+```sh
+npm jasmine
 ```
