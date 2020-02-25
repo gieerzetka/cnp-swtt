@@ -25,16 +25,16 @@ yarn build
 ```
 With npm:
 ```sh
-npm build
+npm run-script build
 ```
 
 ### Test mode
 
 With yarn:
 ```sh
-yarn jasmine
+yarn test
 ```
 With npm:
 ```sh
-npm jasmine
+npm test
 ```
