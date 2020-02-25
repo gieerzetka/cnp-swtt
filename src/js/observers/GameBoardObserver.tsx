@@ -3,15 +3,14 @@ import * as React from "react";
 import ErrorMessage from "../components/ErrorMessage";
 import Spinner from "../components/Spinner";
 import {FetchStatuses} from "../data/FetchStatuses";
-import {swttStore} from "../index";
-import GameUtils from "../utils/GameUtils";
-import NewGameContainer from "./NewGameContainer";
-import PlayersContainer from "./PlayersContainer";
+import {swttStore} from "../store/RootStore";
+import NewGameObserver from "./NewGameObserver";
+import PlayersObserver from "./PlayersObserver";
 
 @observer
-export default class GameBoardContainer extends React.Component<{}, {}> {
-	public async componentDidMount():Promise<void> {
-		await GameUtils.loadGame();
+export default class GameBoardObserver extends React.Component<{}, {}> {
+	public componentDidMount() {
+		swttStore.game.loadGame();
 	}
 
 	private getContent = () => {
@@ -30,14 +29,14 @@ export default class GameBoardContainer extends React.Component<{}, {}> {
 				return <p className="text-light text-center">Game should start loading soon.</p>;
 			default:
 				return [
-					<PlayersContainer key="playersContainer"/>,
-					<NewGameContainer key="newGameContainer"/>
+					<PlayersObserver key="playersContainer"/>,
+					<NewGameObserver key="newGameContainer"/>
 				]
 		}
 	};
 
 	public render() {
-		return <section className="GameBoardContainer d-flex flex-column">
+		return <section className="GameBoardObserver d-flex flex-column">
 			{this.getContent()}
 		</section>;
 	}

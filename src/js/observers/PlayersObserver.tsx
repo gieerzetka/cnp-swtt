@@ -4,11 +4,11 @@ import ErrorMessage from "../components/ErrorMessage";
 import Spinner from "../components/Spinner";
 import WinnersList from "../components/WinnersList";
 import {FetchStatuses} from "../data/FetchStatuses";
-import {swttStore} from "../index";
-import PlayerContainer from "./PlayerContainer";
+import {swttStore} from "../store/RootStore";
+import PlayerObserver from "./PlayerObserver";
 
 @observer
-export default class PlayersContainer extends React.Component<{}, {}> {
+export default class PlayersObserver extends React.Component<{}, {}> {
 	private getContent = () => {
 		switch (swttStore.fight.fightStatus) {
 			case FetchStatuses.PRISTINE:
@@ -21,7 +21,7 @@ export default class PlayersContainer extends React.Component<{}, {}> {
 			case FetchStatuses.ERROR:
 				return <ErrorMessage />;
 			default:
-				return <div className="PlayersContainer">
+				return <div className="PlayersObserver">
 					<WinnersList
 						key="winnersList"
 						additionalClasses="mb-5"
@@ -35,7 +35,7 @@ export default class PlayersContainer extends React.Component<{}, {}> {
 
 	private generatePlayers = () => {
 		return swttStore.players.players.map(player => {
-			return <PlayerContainer
+			return <PlayerObserver
 				key={player.name}
 				player={player}
 			/>;

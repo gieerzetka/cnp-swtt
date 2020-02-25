@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Players} from "../data/Players";
-import {swttStore} from "../index";
+import {swttStore} from "../store/RootStore";
 
 interface IWinnersList {
 	additionalClasses?:string;

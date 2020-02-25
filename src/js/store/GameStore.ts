@@ -1,6 +1,8 @@
 import {action, observable} from "mobx";
 import {FetchStatuses} from "../data/FetchStatuses";
-import {swttStore} from "../index";
+import {ResourceTypes} from "../data/ResourceTypes";
+import ResourceTypesUtil from "../utils/ResourceTypesUtils";
+import {swttStore} from "./RootStore";
 
 export default class GameStore {
 	@observable loadingGame:FetchStatuses = FetchStatuses.PRISTINE;
@@ -18,5 +20,18 @@ export default class GameStore {
 		this.downloadedResourceTypesData++;
 		if (this.downloadedResourceTypesData === swttStore.resourceTypes.resourceTypesCount)
 			this.loadingGame = FetchStatuses.SUCCESS;
+	}
+
+	public loadGame() {
+		swttStore.game.startLoadingGame();
+		const resourceTypes = swttStore.resourceTypes.resourceTypes;
+		for (let i = 0; i < resourceTypes.length; i++) {
+			ResourceTypesUtil.handleFetchingResourceTypeData(resourceTypes[i], this.finishLoadGame, this.markLoadingGameAsError);
+		}
+	}
+
+	private finishLoadGame(responseData:any, resourceTypeName:ResourceTypes) {
+		swttStore.resourceTypes.updateResourceTypeEntriesCount(responseData, resourceTypeName);
+		swttStore.game.finishDownloadingResourceTypesData();
 	}
 }
